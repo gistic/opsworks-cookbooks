@@ -22,7 +22,7 @@ default['java']['jdk_version'] = '6'
 default['java']['arch'] = kernel['machine'] =~ /x86_64/ ? "x86_64" : "i586"
 default['java']['openjdk_packages'] = []
 default['java']['openjdk_version'] = nil
-default['java']['accept_license_agreement'] = true
+default['java']['accept_license_agreement'] = false
 default['java']['set_default'] = true
 default['java']['alternatives_priority'] = 1062
 default['java']['set_etc_environment'] = false
@@ -43,8 +43,6 @@ when "mac_os_x"
 else
   default['java']['install_flavor'] = "openjdk"
 end
-
-default['java']['install_flavor'] = "oracle_rpm"
 
 case node['java']['install_flavor']
 when 'ibm', 'ibm_tar'
@@ -77,7 +75,7 @@ when 'oracle_rpm'
 end
 
 # if you change this to true, you can download directly from Oracle
-default['java']['oracle']['accept_oracle_download_terms'] = true
+default['java']['oracle']['accept_oracle_download_terms'] = false
 
 # direct download paths for oracle, you have been warned!
 
