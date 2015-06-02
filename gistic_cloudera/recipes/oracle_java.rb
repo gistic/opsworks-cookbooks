@@ -1,5 +1,5 @@
 
-node["java"] = {
+node.normal["java"] = {
     "install_flavor" => "oracle",
     "jdk_version" => "7",
     "oracle" => {
