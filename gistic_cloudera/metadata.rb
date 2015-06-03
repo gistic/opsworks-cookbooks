@@ -1,6 +1,6 @@
 name             'gistic_cloudera'
-maintainer       'YOUR_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'Mostafa Elganainy'
+maintainer_email 'melganainy@gistic.org'
 license          'All rights reserved'
 description      'Installs/Configures gistic_cloudera'
 long_description 'Installs/Configures gistic_cloudera'
