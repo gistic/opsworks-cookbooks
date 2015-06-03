@@ -4,6 +4,12 @@ user "cloudera-scm" do
   action :create
 end
 
+user "vagrant" do   
+  system true
+  shell '/bin/bash'
+  action :create
+end
+
 execute "make cloudera-scm a sudoer" do
   command "usermod -a -G sudo cloudera-scm"
   command "usermod -a -G sudo vagrant"
