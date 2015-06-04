@@ -15,7 +15,7 @@ ff02::3 ip6-allhosts
 
 <% @nodes.each do |node| -%>
 
-<% next if node.hostname == @localhost_name %>
+# <% next if node.hostname == @localhost_name %>
 
 <% if node.attributes.attribute?(:private_ip) && node.attributes.private_ip && Resolv.getaddress(node.attributes.private_ip) -%>
 <%= node.attributes.private_ip %> <%= node.name %> <%= node.hostname %>
