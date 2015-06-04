@@ -40,6 +40,18 @@ directory "/var/lib/oozie" do
   action :create
 end
 
+directory "/var/lib/solr" do
+  owner 'cloudera-scm'
+  group 'cloudera-scm'
+  action :create
+end
+
+directory "/var/lib/hadoop-httpfs" do
+  owner 'cloudera-scm'
+  group 'cloudera-scm'
+  action :create
+end
+
 template "/etc/pam.d/su" do
   source "pam.erb"    
   user "root"
