@@ -15,13 +15,15 @@ ff02::3 ip6-allhosts
 
 <% @nodes.each do |node| -%>
 
-<% next if node.name == @localhost_name %>
+<% next if node.hostname == @localhost_name %>
 
 <% if node.attributes.attribute?(:private_ip) && node.attributes.private_ip && Resolv.getaddress(node.attributes.private_ip) -%>
 <%= node.attributes.private_ip %> <%= node.name %> <%= node.hostname %>
 <% else -%>
 <%= "# Unable to resolve IP '#{node.attributes.private_ip}' for hostname '#{node.name}'" %>
 <% end -%>
+
+<% next if node.hostname == @localhost_name %>
 
 <% if node.attributes.attribute?(:ip) && node.attributes.ip && Resolv.getaddress(node.attributes.ip) -%>
 <%= node.attributes.ip %> <%= node.name %>-ext <%= node.hostname %>-ext
