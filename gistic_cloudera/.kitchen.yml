@@ -13,4 +13,5 @@ suites:
     run_list:
       - gistic_cloudera::oracle_java
       - gistic_cloudera::init_single_user_mode
+      - gistic_cloudera::install_cdh5
     attributes:

@@ -28,6 +28,14 @@ directory "/cm/" do
   action :create
 end
 
+directory "/var/lib/sqoop2" do
+  owner 'cloudera-scm'
+  group 'cloudera-scm'
+  action :create
+end
+
+
+
 template "/etc/pam.d/su" do
   source "pam.erb"    
   user "root"
