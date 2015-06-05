@@ -1,3 +1,5 @@
+require 'resolv'
+
 user "cloudera-scm" do   
   system true
   shell '/bin/bash'
@@ -60,3 +62,10 @@ template "/etc/pam.d/su" do
 end
 
 
+template '/etc/hostname' do
+  source "hostname.erb"
+  mode "0644"
+  variables(
+    :localhost_name => node[:opsworks][:instance][:hostname]
+  )
+end
