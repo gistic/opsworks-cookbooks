@@ -67,6 +67,15 @@ template "/etc/pam.d/su" do
 end
 
 
+template '/etc/hosts' do
+  source "hosts.erb"
+  mode "0644"
+  variables(
+    :localhost_name => node[:opsworks][:instance][:hostname],
+    :nodes => search(:node, "name:*")
+  )
+end
+
 template '/etc/hostname' do
   source "hostname.erb"
   mode "0644"
