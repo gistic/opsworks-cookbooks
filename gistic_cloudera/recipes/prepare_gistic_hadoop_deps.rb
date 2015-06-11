@@ -9,7 +9,7 @@ remote_file "/cm/dep/spatialHDFSReplicator.jar" do
   mode '0644'  
 end
 
-env "HADOOP_CLASSPATH" do
-  attribute "/cm/dep/*" # see attributes section below
-  action :modify
+template "/etc/profile.d/setup_gistic_hadoop_classpath.sh" do
+  source "setup_gistic_hadoop_classpath.erb"      
+  mode "0644"
 end
