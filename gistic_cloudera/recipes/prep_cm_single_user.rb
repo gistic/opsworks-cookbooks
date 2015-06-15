@@ -17,11 +17,6 @@ execute "make cloudera-scm a sudoer" do
   command "usermod -a -G sudo vagrant"
 end
 
-execute "Change the hostname" do
-  command "cat /etc/hostname | xargs -0 sudo hostname"
-end
-
-
 template "/etc/sudoers" do
   source "sudoers.erb"    
   user "root"
