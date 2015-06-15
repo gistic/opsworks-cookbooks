@@ -80,6 +80,6 @@ template '/etc/hostname' do
 end
 
 execute "Change the hostname" do
-  command "cat /etc/hostname | xargs -0 sudo hostname"
+  command "sudo hostname -F /etc/hostname"
 end
 
