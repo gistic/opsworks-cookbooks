@@ -16,7 +16,7 @@ paths_object = bucket.objects['paths.json']
 paths_str = paths_object.read
 paths = JSON.parse(paths_str)
 
-
+Chef::Log.level = :debug
 
 # Read the files pointed to by the paths file
 classpath_str = ""
