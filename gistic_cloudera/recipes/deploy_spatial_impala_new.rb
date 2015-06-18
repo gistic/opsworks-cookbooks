@@ -1,3 +1,5 @@
+include_recipe 'aws'
+
 #require 'rubygems'
 require 'aws-sdk'
 
@@ -48,9 +50,14 @@ bucket.objects.each do |file|
 
 				puts "Creating the file ... "
 
-				create_aws_s3_file targetPath do
-				  bucket "spatial-impala-deploy"
-				  remote_path file.key				  
+
+				file targetPath do
+				  owner 'cloudera-scm'
+				  group 'cloudera-scm'
+				  mode '0755'
+				  force_unlink true
+				  content file_content
+				  action :create
 				end
 
 			end
