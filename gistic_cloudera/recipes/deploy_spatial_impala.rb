@@ -17,21 +17,61 @@ paths_str = paths_object.body.read
 paths = JSON.parse(paths_str)
 
 
+
 # Read the files pointed to by the paths file
-files = s3.list_objects(bucket: 'spatial-impala-jars').contents
+classpath_str = ""
 
-files.each do |file|
-	paths['s3-to-local-map'].each do |key_pattern, target_path|
-		if(file.key =~ Regexp.new(key_pattern) )
-			file_object = s3.get_object(bucket: 'spatial-impala-jars', key: file.key)
-			file_content = file_object.body.read
+paths['s3-to-local-map'].each do |prefix, target_prefix|
+	
+	files = s3.list_objects(bucket: 'spatial-impala-jars', prefix: prefix).contents	
+	
+	files.each do |file|
 
-			file target_path do
-			  content file_content
-			  action :create
+		if file.key.start_with? prefix 
+	
+			targetPath = file.key.gsub prefix, target_prefix		
+
+			if file.key.end_with? "/"  # Directory
+				puts "Dir : " + targetPath				
+				
+				directory targetPath do
+					mode 0755
+					owner 'cloudera-scm'
+					action :create
+				end
+			else
+				file_object = s3.get_object(bucket: 'spatial-impala-jars', key: file.key)
+				file_content = file_object.body.read
+				
+				puts file.key + " ---> " + targetPath
+
+				if prefix =~ /.*deps.*/
+					classpath_str += targetPath + ":"
+				end
+
+				file targetPath do
+				  content file_content
+				  action :create
+				end
+
 			end
-
-			break
 		end		
-	end  
+	end
+end  
+
+paths['configurations-dirs'].each do |dir|
+	classpath_str += dir + ":"
+end 
+
+logs_msg = "########################################################################\n"
+logs_msg += "##################                                  ####################\n"
+logs_msg += "##################      SpatialImpala deps          ####################\n"
+logs_msg += "##################                                  ####################\n"
+logs_msg += "########################################################################\n"
+logs_msg += "\n"
+logs_msg += ""
+logs_msg += "CLASSPATH String"
+logs_msg += ""
+log classpath_str do
+    level :info
 end
