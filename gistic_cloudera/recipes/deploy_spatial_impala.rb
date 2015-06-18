@@ -1,10 +1,6 @@
 #require 'rubygems'
 require 'aws-sdk'
 
-AWS_ACCESS_KEY_ID="AKIAIV4DS254Y3ZEOOKA"
-AWS_SECRET_ACCESS_KEY="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"
-AWS_REGION="eu-central-1"
-
 #credentials = Aws::Credentials.new(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
 #s3 = Aws::S3::Client.new(region:AWS_REGION, 
@@ -14,8 +10,10 @@ s3 = AWS::S3.new
 
 # Read paths
 
-paths_object = s3.get_object(bucket: 'spatial-impala-jars', key: "paths.json")
-paths_str = paths_object.body.read
+#paths_object = s3.get_object(bucket: 'spatial-impala-jars', key: "paths.json")
+bucket = s3.buckets['spatial-impala-deploy']
+paths_object = bucket.objects['paths.json']
+paths_str = paths_object.read
 paths = JSON.parse(paths_str)
 
 
@@ -23,14 +21,10 @@ paths = JSON.parse(paths_str)
 # Read the files pointed to by the paths file
 classpath_str = ""
 
-paths['s3-to-local-map'].each do |prefix, target_prefix|
-	
-	files = s3.list_objects(bucket: 'spatial-impala-jars', prefix: prefix).contents	
-	
-	files.each do |file|
+bucket.objects.each do |file|
+	paths['s3-to-local-map'].each do |prefix, target_prefix|
+		if file.key.start_with? prefix
 
-		if file.key.start_with? prefix 
-	
 			targetPath = file.key.gsub prefix, target_prefix		
 
 			if file.key.end_with? "/"  # Directory
@@ -41,9 +35,8 @@ paths['s3-to-local-map'].each do |prefix, target_prefix|
 					owner 'cloudera-scm'
 					action :create
 				end
-			else
-				file_object = s3.get_object(bucket: 'spatial-impala-jars', key: file.key)
-				file_content = file_object.body.read
+			else				
+				file_content = file.read
 				
 				puts file.key + " ---> " + targetPath
 
@@ -57,9 +50,11 @@ paths['s3-to-local-map'].each do |prefix, target_prefix|
 				end
 
 			end
-		end		
+
+			break
+		end
 	end
-end  
+end
 
 paths['configurations-dirs'].each do |dir|
 	classpath_str += dir + ":"
