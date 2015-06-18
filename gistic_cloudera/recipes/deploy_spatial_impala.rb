@@ -57,8 +57,6 @@ bucket.objects.each do |file|
 				end
 
 			end
-
-			break
 		end
 	end
 end
@@ -76,6 +74,7 @@ logs_msg += "\n"
 logs_msg += ""
 logs_msg += "CLASSPATH String"
 logs_msg += ""
-log classpath_str do
+logs_msg += classpath_str
+log logs_msg do
     level :info
 end
