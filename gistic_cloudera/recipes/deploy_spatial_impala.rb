@@ -5,7 +5,7 @@ AWS_ACCESS_KEY_ID="AKIAIV4DS254Y3ZEOOKA"
 AWS_SECRET_ACCESS_KEY="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"
 AWS_REGION="eu-central-1"
 
-credentials = Aws::Credentials.new(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
+#credentials = Aws::Credentials.new(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY);
 
 s3 = Aws::S3::Client.new(region:AWS_REGION, 
     credentials: credentials)
