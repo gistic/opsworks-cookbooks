@@ -35,16 +35,24 @@ bucket.objects.each do |file|
 					owner 'cloudera-scm'
 					action :create
 				end
-			else				
+			else
+				puts "Reading file contents : " + file.key				
+				
 				file_content = file.read
 				
-				puts file.key + " ---> " + targetPath
+				puts "Putting file '" + file.key + "' into ---> " + targetPath
 
 				if prefix =~ /.*deps.*/
 					classpath_str += targetPath + ":"
 				end
 
+				puts "Creating the file ... "
+
 				file targetPath do
+				  owner 'cloudera-scm'
+				  group 'cloudera-scm'
+				  mode '0755'
+				  force_unlink true
 				  content file_content
 				  action :create
 				end
