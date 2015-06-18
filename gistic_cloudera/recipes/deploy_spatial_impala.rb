@@ -37,9 +37,7 @@ bucket.objects.each do |file|
 					action :create
 				end
 			else
-				puts "Reading file contents : " + file.key				
-				
-				file_content = file.read
+				puts "Reading file contents : " + file.key												
 				
 				puts "Putting file '" + file.key + "' into ---> " + targetPath
 
