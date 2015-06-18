@@ -49,7 +49,7 @@ bucket.objects.each do |file|
 
 				puts "Creating the file ... "
 
-				create_aws_s3_file targetPath do
+				aws_s3_file targetPath do
 				  bucket "spatial-impala-deploy"
 				  remote_path file.key				  
 				end
