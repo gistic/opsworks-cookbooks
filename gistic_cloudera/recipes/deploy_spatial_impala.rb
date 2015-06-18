@@ -33,6 +33,7 @@ bucket.objects.each do |file|
 				
 				directory targetPath do
 					mode 0755
+					recursive true
 					owner 'cloudera-scm'
 					action :create
 				end
@@ -47,9 +48,12 @@ bucket.objects.each do |file|
 
 				puts "Creating the file ... "
 
-				aws_s3_file targetPath do
-				  bucket "spatial-impala-deploy"
-				  remote_path file.key				  
+				remote_file targetPath do
+					source file.url_for(:read, :expires => 300).to_s.gsub(/https:\/\/([\w\.\-]*)\.{1}s3.amazonaws.com:443/, 'https://s3.amazonaws.com:443/\1') # Fix for ssl cert issue
+				  	action :create
+				  	owner 'cloudera-scm'
+				  	group 'cloudera-scm'
+				  	mode '0755'
 				end
 
 			end
