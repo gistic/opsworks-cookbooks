@@ -50,7 +50,7 @@ bucket.objects.each do |file|
 					puts "Creating the file ... "
 
 					remote_file targetPath do
-						source file.url_for(:read, :expires => 300).to_s.gsub(/https:\/\/([\w\.\-]*)\.{1}s3.amazonaws.com:443/, 'https://s3.amazonaws.com:443/\1') # Fix for ssl cert issue
+						source file.url_for(:read, :expires => 6000).to_s.gsub(/https:\/\/([\w\.\-]*)\.{1}s3.amazonaws.com:443/, 'https://s3.amazonaws.com:443/\1') # Fix for ssl cert issue
 					  	action :create
 					  	owner 'cloudera-scm'
 					  	group 'cloudera-scm'
