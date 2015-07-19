@@ -1,4 +1,5 @@
 directory "/cm/dep" do
+  recursive true
   owner 'cloudera-scm'
   group 'cloudera-scm'
   action :create
