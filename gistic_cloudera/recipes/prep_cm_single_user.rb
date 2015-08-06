@@ -24,6 +24,12 @@ template "/etc/sudoers" do
   mode 0440
 end
 
+directory "/mnt/" do
+  owner 'cloudera-scm'
+  group 'cloudera-scm'
+  action :create
+end
+
 directory "/cm/" do
   owner 'cloudera-scm'
   group 'cloudera-scm'
