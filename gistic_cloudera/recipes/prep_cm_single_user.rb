@@ -30,6 +30,12 @@ directory "/mnt/" do
   action :create
 end
 
+directory "/mnt/mapred/local/" do
+  owner 'cloudera-scm'
+  group 'cloudera-scm'
+  action :create
+end
+
 directory "/cm/" do
   owner 'cloudera-scm'
   group 'cloudera-scm'
